@@ -1,0 +1,19 @@
+const dotenv = require("dotenv");
+const express = require("express");
+
+const authRoutes = require("./routes/auth.routes");
+const userRoutes=require("./routes/user.routes");
+
+dotenv.config();
+
+const app = express();
+
+app.use(express.json());
+
+app.use("/api/auth", authRoutes);
+app.use("/api/user",userRoutes);
+
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
+   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+});
