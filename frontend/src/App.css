@@ -1,0 +1,77 @@
+/* Layout wrapper */
+.app-container {
+  padding: 20px;
+  flex: 1;
+}
+
+/* Forms (Login/Register) */
+.form-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.form-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 320px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  background: var(--bg);
+}
+
+.form-box input {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  outline: none;
+}
+
+.form-box input:focus {
+  border-color: var(--accent);
+}
+
+/* Buttons */
+.btn {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-h);
+  font-weight: 500;
+}
+
+.logout-btn {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
