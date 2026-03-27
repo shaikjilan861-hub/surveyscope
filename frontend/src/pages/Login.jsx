@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/auth.service";
 
@@ -13,6 +13,27 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+  const token = localStorage.getItem("accessToken");
+
+  if (token) {
+    navigate("/", { replace: true });
+  }
+}, []);
+
+useEffect(() => {
+  window.history.pushState(null, "", window.location.href);
+
+  const handleBack = () => {
+    window.history.pushState(null, "", window.location.href);
+  };
+
+  window.addEventListener("popstate", handleBack);
+
+  return () => {
+    window.removeEventListener("popstate", handleBack);
+  };
+}, []);
   const handleSubmit = async () => {
     try {
       setError("");
@@ -23,7 +44,8 @@ export default function Login() {
       localStorage.setItem("accessToken", res.accessToken || res.token);
       localStorage.setItem("user", JSON.stringify(res.user));
 
-      navigate("/");
+    
+      navigate("/", { replace: true });
     } catch (err) {
       setError(
         err.response?.data?.message || "Invalid email or password"

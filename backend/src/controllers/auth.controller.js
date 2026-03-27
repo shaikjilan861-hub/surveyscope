@@ -90,6 +90,17 @@ const login = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+// controllers/auth.controller.js
+
+const logout = async (req, res) => {
+  try {
+    // nothing to do in backend (JWT is stateless)
+    res.json({ message: "Logged out successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Logout failed" });
+  }
+};
 
 
-module.exports = { register,login };
+
+module.exports = { register,login ,logout};

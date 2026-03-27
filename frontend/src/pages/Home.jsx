@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 export default function Home() {
+  // ✅ get token properly
+  const accessToken = localStorage.getItem("accessToken");
+
   return (
     <>
-      <Navbar />
-
+       <Navbar /> 
       {/* HERO */}
       <div style={styles.hero}>
         <div style={styles.heroContent}>
@@ -19,10 +21,12 @@ export default function Home() {
           </p>
 
           <div style={styles.actions}>
-            <Link to="/login" style={styles.primaryBtn}>
+            <Link
+              to={accessToken ? "/workspaces" : "/login"} // ✅ fixed
+              style={styles.primaryBtn}
+            >
               Get Started
             </Link>
-          
           </div>
         </div>
 

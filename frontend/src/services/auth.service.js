@@ -18,3 +18,32 @@ export const registerUser = async (data) => {
   return res.data;
 };
 
+export const logoutUser = async () => {
+  try {
+    const token = localStorage.getItem("accessToken");
+
+    if (token) {
+      await API.post(
+        "/auth/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    }
+  } catch (err) {
+    console.error("Logout API failed:", err);
+  }
+
+  // 🔥 Clear everything
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user");
+};
+
+export const getAllUsers = async () => {
+  const res = await API.get("/user/getAll");
+  return res.data;
+};

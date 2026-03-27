@@ -18,7 +18,8 @@ exports.up = async function (knex) {
 
     table
       .enu("role", ["OWNER", "ADMIN", "VIEWER"])
-      .notNullable();
+      .notNullable()
+      .defaultTo("VIEWER"); // ✅ fixed
 
     table.timestamp("joined_at").defaultTo(knex.fn.now());
 

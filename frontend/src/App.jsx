@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 
 // Auth Pages
 import Home from "./pages/Home";
@@ -6,33 +6,54 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 
 // Workspace Pages
-
+import AddMember from "./pages/workspace/AddMember";
 import CreateWorkspace from "./pages/workspace/CreateWorkspace";
 import WorkspaceDetails from "./pages/workspace/WorkspaceDetails";
 import WorkspaceHome from "./pages/workspace/WorkspaceHome";
 import WorkspaceList from "./pages/workspace/WorkspaceList";
 
-import AddMember from "./pages/workspace/AddMember";
+// Survey Pages
+import CreateSurvey from "./pages/survey/CreateSurvey";
+import EditSurvey from "./pages/survey/EditSurvey";
+import SurveyPage from "./pages/survey/SurveyPage";
 
-function App() {
+// Header
+import AppHeader from "./components/AppHeader";
+
+// ✅ THIS component is INSIDE Router
+function Layout() {
+  const location = useLocation();
+
+  const hideHeaderRoutes = ["/", "/login", "/register"];
+  const showHeader = !hideHeaderRoutes.includes(location.pathname);
+
   return (
-    <BrowserRouter>
+    <>
+      {showHeader && <AppHeader />}
+
       <Routes>
-        {/* Auth Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Workspace Routes */}
-       <Route path="/workspaces" element={<WorkspaceHome />} />
-<Route path="/workspaces/create" element={<CreateWorkspace />} />
-<Route path="/workspaces/list" element={<WorkspaceList />} />
-<Route path="/workspaces/:id" element={<WorkspaceDetails />} />
+        <Route path="/workspaces" element={<WorkspaceHome />} />
+        <Route path="/workspaces/create" element={<CreateWorkspace />} />
+        <Route path="/workspaces/list" element={<WorkspaceList />} />
+        <Route path="/workspaces/:id" element={<WorkspaceDetails />} />
+        <Route path="/workspaces/:id/add-member" element={<AddMember />} />
 
-<Route path="/workspaces/:id/add-member" element={<AddMember />} />
+        <Route path="/workspaces/:id/create-survey" element={<CreateSurvey />} />
+        <Route path="/workspaces/:id/surveys/:surveyId" element={<SurveyPage />} />
+        <Route path="/workspaces/:id/surveys/:surveyId/edit" element={<EditSurvey />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Layout /> {/* ✅ Header is inside router now */}
+    </BrowserRouter>
+  );
+}

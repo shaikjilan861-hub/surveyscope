@@ -10,12 +10,32 @@ export default function Navbar() {
     if (u) setUser(JSON.parse(u));
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("user");
-    setUser(null);
-    navigate("/");
-  };
+  const handleLogout = async () => {
+  try {
+    const token = localStorage.getItem("accessToken");
+ if (!token) {
+    navigate("/login", { replace: true });
+  }
+    if (token) {
+      await fetch("http://localhost:5000/api/auth/logout", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+  } catch (err) {
+    console.error("Logout failed:", err);
+  }
+
+  // ✅ Clear ALL auth data
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user");
+
+  setUser(null);
+  navigate("/login", { replace: true });
+};
 
   return (
     <nav style={styles.nav}>

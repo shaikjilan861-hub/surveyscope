@@ -40,6 +40,9 @@ export default function WorkspaceList() {
             <div key={ws.id} style={styles.card}>
               <h3 style={styles.name}>{ws.name}</h3>
 
+              {/* ✅ Show Role */}
+              <p style={styles.role}>Role: {ws.role}</p>
+
               <div style={styles.actions}>
                 <button
                   style={styles.openBtn}
@@ -48,14 +51,17 @@ export default function WorkspaceList() {
                   Open
                 </button>
 
-                <button
-                  style={styles.memberBtn}
-                  onClick={() =>
-                    navigate(`/workspaces/${ws.id}/add-member`)
-                  }
-                >
-                  Add Member
-                </button>
+                {/* ✅ Only OWNER can see */}
+                {ws.role === "OWNER" && (
+                  <button
+                    style={styles.memberBtn}
+                    onClick={() =>
+                      navigate(`/workspaces/${ws.id}/add-member`)
+                    }
+                  >
+                    Add Member
+                  </button>
+                )}
               </div>
             </div>
           ))}
@@ -95,8 +101,13 @@ const styles = {
   name: {
     fontSize: "19px",
     fontWeight: "600",
-    marginBottom: "18px",
+    marginBottom: "8px",
     color: "#1e293b",
+  },
+  role: {
+    fontSize: "13px",
+    color: "#64748b",
+    marginBottom: "14px",
   },
   actions: {
     display: "flex",

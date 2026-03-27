@@ -67,7 +67,7 @@ const addMember = async (req, res) => {
       return res.status(400).json({ message: "user_id and role required" });
     }
 
-    // ✅ 1. Check current user's role in workspace
+    // ✅ 1. Get workspace with role
     const workspace = await workspaceModel.getWorkspaceById(
       workspaceId,
       currentUserId
@@ -77,19 +77,14 @@ const addMember = async (req, res) => {
       return res.status(404).json({ message: "Workspace not found" });
     }
 
-    // ✅ 2. Allow only OWNER / ADMIN
-    if (!["OWNER", "ADMIN"].includes(workspace.role)) {
-      return res.status(403).json({ message: "Not allowed" });
+    // ✅ 2. ONLY OWNER can add members
+    if (workspace.role !== "OWNER") {
+      return res.status(403).json({
+        message: "Only workspace owner can add members",
+      });
     }
 
-    // ✅ 3. Only OWNER can assign ADMIN
-    if (role === "ADMIN" && workspace.role !== "OWNER") {
-      return res
-        .status(403)
-        .json({ message: "Only owner can assign ADMIN role" });
-    }
-
-    // ✅ 4. Add member
+    // ✅ 3. Add member (no extra restrictions needed now)
     await workspaceModel.addMember(workspaceId, user_id, role);
 
     res.json({ message: "Member added successfully" });

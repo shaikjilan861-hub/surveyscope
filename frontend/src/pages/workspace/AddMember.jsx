@@ -1,12 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { getAllUsers } from "../../services/auth.service";
 import { addMember } from "../../services/workspace.service";
 
 export default function AddMember() {
+  const [users, setUsers] = useState([]); // 🔥 store users
   const [userId, setUserId] = useState("");
   const [role, setRole] = useState("VIEWER");
+
   const navigate = useNavigate();
   const { id } = useParams();
+
+  useEffect(() => {
+    fetchUsers(); // 🔥 call on load
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const data = await getAllUsers();
+      setUsers(data.users || data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleAdd = async () => {
+    try {
+      if (!userId || !role) return;
+
+      await addMember(id, {
+        user_id: userId,
+        role,
+      });
+
+      navigate(`/workspaces/${id}`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const styles = {
     container: {
@@ -33,13 +64,6 @@ export default function AddMember() {
       color: "#1e293b",
       marginBottom: "10px",
     },
-    input: {
-      padding: "12px",
-      border: "1px solid #cbd5f5",
-      borderRadius: "8px",
-      outline: "none",
-      fontSize: "14px",
-    },
     select: {
       padding: "12px",
       border: "1px solid #cbd5f5",
@@ -60,44 +84,38 @@ export default function AddMember() {
     },
   };
 
-  const handleAdd = async () => {
-    try {
-      if (!userId || !role) return;
-
-      await addMember(id, {
-        user_id: userId,
-        role,
-      });
-
-      navigate(`/workspaces/${id}`);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <div style={styles.container}>
       <div style={styles.card}>
         <h2 style={styles.title}>Add Member</h2>
 
-        <input
-          style={styles.input}
+        {/* 🔥 USER DROPDOWN */}
+        <select
+          style={styles.select}
           value={userId}
           onChange={(e) => setUserId(e.target.value)}
-          placeholder="Enter user ID"
-        />
+        >
+          <option value="">Select User</option>
 
+          {users.map((u) => (
+            <option key={u.id} value={u.id}>
+              {u.name}
+            </option>
+          ))}
+        </select>
+
+        {/* 🔥 ROLE DROPDOWN */}
         <select
           style={styles.select}
           value={role}
           onChange={(e) => setRole(e.target.value)}
         >
           <option value="VIEWER">VIEWER</option>
-          <option value="ADMIN">ADMIN</option>
+          <option value="OWNER">OWNER</option>
         </select>
 
         <button style={styles.button} onClick={handleAdd}>
-          Add
+          Add Member
         </button>
       </div>
     </div>
