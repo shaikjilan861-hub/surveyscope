@@ -12,11 +12,13 @@ export default function AddMember() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetchUsers(); // 🔥 call on load
+    fetchUsers(); // 🔥 call on 
   }, []);
 
   const fetchUsers = async () => {
     try {
+
+
       const data = await getAllUsers();
       setUsers(data.users || data);
     } catch (err) {
