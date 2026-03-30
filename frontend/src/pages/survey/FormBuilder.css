@@ -1,0 +1,136 @@
+/* GLOBAL */
+body {
+  background: #f4f6fb;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 750px;
+  margin: 40px auto;
+}
+
+/* CARD */
+.card {
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* SUCCESS MESSAGE */
+.success-msg {
+  position: fixed;          /* 🔥 makes it float */
+  top: 20px;                /* distance from top */
+  right: 20px;              /* right corner */
+  background: #10b981;      /* green */
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 9999;
+  animation: slideIn 0.3s ease;
+}
+
+/* 🔥 Smooth animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* INPUTS */
+.input,
+.select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: 0.2s;
+}
+
+.input:focus,
+.select:focus {
+  border-color: #6366f1;
+  outline: none;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 8px;
+  margin-top: 8px;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.primary {
+  background: #6366f1;
+  color: white;
+}
+
+.secondary {
+  background: #e5e7eb;
+}
+
+.edit {
+  background: #f59e0b;
+  color: white;
+}
+
+.danger {
+  background: #ef4444;
+  color: white;
+}
+
+.success {
+  background: #22c55e;
+  color: white;
+  width: 100%;
+  padding: 12px;
+}
+
+/* QUESTIONS */
+.question {
+  border: 1px solid #eee;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+  transition: 0.2s;
+}
+
+.question:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* LINK BOX */
+.link-box {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.link-input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.copy {
+  background: #3b82f6;
+  color: white;
+}
